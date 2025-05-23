@@ -218,7 +218,7 @@ export function generateSingleRequestSnippet(
 
   try {
     if (request.content) {
-      const escapedContent = escapeBackticks(request.content)
+      const escapedContent = escapeTemplateStringContent(request.content)
       content = `\`${escapedContent}\``
 
       // if we have postData parameters we need to pass an object to the k6 post function because if it receives
@@ -296,8 +296,11 @@ export function generateParameterizationCustomCode(
     .join('\n')
 }
 
-function escapeBackticks(content: string): string {
-  return content.replace(/`/g, '\\`')
+function escapeTemplateStringContent(content: string): string {
+  // Escape backslashes and backticks for safe template string usage
+  return content
+    .replace(/\\/g, '\\\\') // escape backslashes first
+    .replace(/`/g, '\\`')
 }
 
 function generateChecks(checks: RequestSnippetSchema['checks']) {

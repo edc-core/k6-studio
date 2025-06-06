@@ -19,7 +19,7 @@ export function FilterField({
     <FieldGroup
       name={fieldName}
       label="Filter"
-      hint="Filter requests by URL (regex supported)"
+      hint="Filter requests by URL (regex supported by single quoting entire value, Example: '/api/v[0-9]+/users')"
       errors={errors}
     >
       <TextField.Root

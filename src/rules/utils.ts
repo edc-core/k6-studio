@@ -29,7 +29,11 @@ export function* generateSequentialInt(): Generator<number, number, number> {
 
 export function matchFilter(request: Request, filter: Filter) {
   try {
-    return new RegExp(escapeRegExp(filter.path)).test(request.url)
+    const regexStrMatch = filter.path.match(/^'(.*)'$/)
+    const regex = regexStrMatch
+      ? new RegExp('' + regexStrMatch[1])
+      : new RegExp(escapeRegExp(filter.path))
+    return regex.test(request.url)
   } catch (e) {
     console.error(e)
     return false
